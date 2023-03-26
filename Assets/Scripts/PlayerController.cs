@@ -4,6 +4,7 @@ public class PlayerController : MonoBehaviour {
 
 	public float moveSpeed = 10f;
 	public float rotationSpeed = 10f;
+	public float rotationIntensity = 2;
 
 	private float rotation;
 	private Rigidbody rb;
@@ -16,6 +17,18 @@ public class PlayerController : MonoBehaviour {
 	void Update ()
 	{
 		rotation = Input.GetAxisRaw("Horizontal");
+
+        if (MobileInput.Instance.SwipeLeft)
+        {
+			MovePlayerLeft();
+			Debug.Log("Swiped left!!");
+        }
+
+		else if (MobileInput.Instance.SwipeRight)
+		{
+			MovePlayerRight();
+			Debug.Log("Swiped right!!");
+		}
 	}
 
 	void FixedUpdate ()
@@ -28,4 +41,13 @@ public class PlayerController : MonoBehaviour {
 		//transform.Rotate(0f, rotation * rotationSpeed * Time.fixedDeltaTime, 0f, Space.Self);
 	}
 
+    public void MovePlayerLeft()
+    {
+		rotation = -1f * rotationIntensity;
+    }
+
+	public void MovePlayerRight()
+    {
+		rotation = 1f * rotationIntensity;
+    }
 }
